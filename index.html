@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1d6b86">
+  <meta name="description" content="Mapa, adreces, camins i guia d'ús de l'Horta de Lleida.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="app.css">
+  <title>Mapa de l'Horta de Lleida</title>
+</head>
+<body class="pwa-home-page">
+  <main class="pwa-home">
+    <h1>Mapa de l'Horta<br>de Lleida</h1>
+    <p class="pwa-lede">Adreces, camins, límits de les partides i eines per comunicar incidències.</p>
+
+    <section class="pwa-launch-grid" aria-label="Seccions de l'aplicació">
+      <a class="pwa-launch-card pwa-map-card" href="mapa.html">
+        <span class="pwa-card-icon" aria-hidden="true">⌖</span>
+        <span>
+          <strong>Obrir el mapa</strong>
+          <small>Busca adreces i camins, consulta capes i prepara una sol·licitud.</small>
+        </span>
+        <span class="pwa-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="pwa-launch-card pwa-guide-card" href="guia.html">
+        <span class="pwa-card-icon" aria-hidden="true">?</span>
+        <span>
+          <strong>Consultar la guia</strong>
+          <small>Instruccions ràpides per utilitzar el mapa i generar comunicacions.</small>
+        </span>
+        <span class="pwa-arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <div class="pwa-actions">
+      <button id="install-app" class="pwa-install" type="button" hidden>Instal·la l'aplicació</button>
+      <span id="connection-status" class="pwa-status" role="status">Comprovant connexió…</span>
+    </div>
+
+    <p class="pwa-note">Les dades de les adreces, camins i partides formen part de l'aplicació. Les capes cartogràfiques de fons es carreguen des de l'ICGC i OpenStreetMap.</p>
+  </main>
+  <footer class="pwa-footer">Versió web instal·lable · Lleida</footer>
+  <script src="app-shell.js" defer></script>
+</body>
+</html>
