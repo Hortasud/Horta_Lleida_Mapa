@@ -208,8 +208,8 @@ dialog.field-dialog::backdrop{background:rgba(12,18,14,.58);backdrop-filter:blur
 .field-photo-help{margin:-2px 0 0;color:var(--ink-faint);font-size:10.5px}
 .field-photo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .field-photo-empty{grid-column:1/-1;margin:3px 0;padding:14px;border:1px dashed var(--line-strong);border-radius:7px;color:var(--ink-faint);font-size:11.5px;text-align:center}
-.field-photo-item{position:relative;overflow:hidden;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
-.field-photo-open{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.field-photo-item{position:relative;overflow:hidden;display:grid;grid-template-rows:auto auto;margin:0;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+.field-photo-open{position:relative;display:block;width:100%;aspect-ratio:4/3;padding:0;border:0;background:#171b18;cursor:zoom-in}
 .field-photo-open::after{
   content:"Amplia";
   position:absolute;
@@ -225,23 +225,28 @@ dialog.field-dialog::backdrop{background:rgba(12,18,14,.58);backdrop-filter:blur
 }
 .field-photo-open:hover::after,.field-photo-open:focus-visible::after{opacity:1}
 .field-photo-open:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
-.field-photo-item img{display:block;width:100%;height:100%;object-fit:cover}
-.field-photo-remove{
+.field-photo-item img{display:block;width:100%;height:100%;object-fit:contain}
+.field-photo-number{
   position:absolute;
   top:5px;
-  right:5px;
-  display:grid;
-  place-items:center;
-  width:26px;
-  height:26px;
-  padding:0;
-  border:2px solid #fff;
-  border-radius:50%;
-  background:rgba(22,28,24,.84);
+  left:5px;
+  padding:3px 6px;
+  border-radius:5px;
+  background:rgba(22,28,24,.76);
   color:#fff;
-  font:700 17px/1 Arial,sans-serif;
+  font:600 9.5px/1 Archivo,"Helvetica Neue",Arial,sans-serif;
+}
+.field-photo-remove{
+  width:100%;
+  padding:7px 5px;
+  border:0;
+  border-top:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--avis);
+  font:600 10px/1.2 Archivo,"Helvetica Neue",Arial,sans-serif;
   cursor:pointer;
 }
+.field-photo-remove:hover{background:color-mix(in srgb,var(--avis) 10%,var(--surface-2))}
 .field-photo-remove:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .field-photo-viewer{
   width:min(1100px,96vw);
@@ -351,7 +356,7 @@ dialog.field-dialog::backdrop{background:rgba(12,18,14,.58);backdrop-filter:blur
   dialog.field-dialog{width:calc(100vw - 18px);max-height:94dvh}
   #field-note-form,.field-notes-dialog>section{max-height:94dvh}
   .field-dialog-head,.field-dialog-body,.field-dialog-foot{padding-inline:16px}
-  .field-photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .field-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .field-photo-open::after{opacity:1}
   .field-photo-viewer{width:100vw;height:100dvh;border-radius:0}
   .field-photo-viewer-stage{padding:10px 48px}

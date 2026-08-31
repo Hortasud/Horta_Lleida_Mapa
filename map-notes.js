@@ -287,18 +287,24 @@
       var image = document.createElement('img');
       image.src = photoSource(photo);
       image.alt = 'Fotografia ' + (index + 1) + ' de la nota';
+      image.loading = 'lazy';
+      image.decoding = 'async';
       var open = document.createElement('button');
       open.type = 'button';
       open.className = 'field-photo-open';
       open.dataset.photoOpen = String(index);
       open.setAttribute('aria-label', 'Amplia la fotografia ' + (index + 1));
       open.appendChild(image);
+      var number = document.createElement('span');
+      number.className = 'field-photo-number';
+      number.textContent = 'Foto ' + (index + 1);
+      open.appendChild(number);
       var remove = document.createElement('button');
       remove.type = 'button';
       remove.className = 'field-photo-remove';
       remove.dataset.photoIndex = String(index);
       remove.setAttribute('aria-label', 'Treu la fotografia ' + (index + 1));
-      remove.textContent = '×';
+      remove.textContent = 'Treu la foto';
       item.appendChild(open);
       item.appendChild(remove);
       photoGrid.appendChild(item);
@@ -598,7 +604,12 @@
   photoGrid.addEventListener('click', function(event){
     var button = event.target.closest ? event.target.closest('[data-photo-index]') : null;
     if(button){
-      activePhotos.splice(+button.dataset.photoIndex, 1);
+      event.preventDefault();
+      event.stopPropagation();
+      var index = +button.dataset.photoIndex;
+      if(!activePhotos[index]) return;
+      if(!window.confirm('Vols treure la fotografia ' + (index + 1) + ' d\'aquesta nota?')) return;
+      activePhotos.splice(index, 1);
       renderPhotos();
       setNoteStatus('Fotografia treta de la nota.');
       return;
