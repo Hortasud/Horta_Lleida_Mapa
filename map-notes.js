@@ -553,6 +553,7 @@
   function startPick(){
     if(pickMode){ stopPick(true); return; }
     if(notesDialog.open) notesDialog.close();
+    map.invalidateSize({pan:false});
     pickMode = true;
     freeNoteButton.setAttribute('aria-pressed', 'true');
     mapEl.classList.add('field-pick-active');
@@ -570,15 +571,30 @@
     if(cancelled) setToolsStatus('Marcatge cancel·lat.');
   }
 
+  function finishPick(point){
+    if(!pickMode || !point) return;
+    stopPick(false);
+    openEditor({lat:point.lat,lng:point.lng}, null);
+  }
+
   locateButton.addEventListener('click', function(){ locate(false); });
   currentNoteButton.addEventListener('click', function(){ locate(true); });
   freeNoteButton.addEventListener('click', startPick);
   notesOpenButton.addEventListener('click', function(){ renderList(); notesDialog.showModal(); });
 
-  map.on('click', function(event){
+  /* La captura directa evita que una capa cartogràfica intercepti el primer toc.
+     L'esdeveniment de Leaflet es manté com a alternativa per a teclat i altres entrades. */
+  mapEl.addEventListener('click', function(event){
     if(!pickMode) return;
-    stopPick(false);
-    openEditor({lat:event.latlng.lat,lng:event.latlng.lng}, null);
+    var control = event.target.closest ? event.target.closest('.leaflet-control,.leaflet-popup') : null;
+    if(control) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    finishPick(map.mouseEventToLatLng(event));
+  }, true);
+
+  map.on('click', function(event){
+    finishPick(event.latlng);
   });
 
   document.addEventListener('keydown', function(event){

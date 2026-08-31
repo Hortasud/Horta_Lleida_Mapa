@@ -1,6 +1,6 @@
 /* Servei fora de línia de la PWA. Incrementa aquesta versió quan es publiqui
    una actualització important del projecte. */
-const CACHE_NAME = 'mapa-horta-shell-v6';
+const CACHE_NAME = 'mapa-horta-shell-v7';
 const APP_SHELL = [
   './', './index.html', './mapa.html', './guia.html', './app.css',
   './app-shell.js', './map-notes.css', './map-notes.js',
