@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Zilla+Slab:wght@500;600&display=swap">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="map-notes.css">
 <script src="app-shell.js" defer></script>
 <style>/* required styles */
 
@@ -961,6 +962,27 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
         <select id="partida" aria-label="Filtra per partida"><option value="">Totes les partides</option></select>
       </div>
     </div>
+    <section class="field-tools" aria-labelledby="field-tools-title">
+      <div class="field-tools-head">
+        <span class="eyebrow" id="field-tools-title">Eines de camp</span>
+        <span class="field-private">Només en aquest dispositiu</span>
+      </div>
+      <div class="field-tools-grid">
+        <button type="button" class="field-tool-btn" id="geo-locate">
+          <span class="field-tool-icon" aria-hidden="true">◎</span><span>Ubica'm</span>
+        </button>
+        <button type="button" class="field-tool-btn" id="note-current">
+          <span class="field-tool-icon" aria-hidden="true">＋</span><span>Nota aquí</span>
+        </button>
+        <button type="button" class="field-tool-btn" id="note-free" aria-pressed="false">
+          <span class="field-tool-icon" aria-hidden="true">⌖</span><span>Marcar al mapa</span>
+        </button>
+        <button type="button" class="field-tool-btn" id="notes-open">
+          <span class="field-tool-icon" aria-hidden="true">▤</span><span>Notes <b id="notes-count">0</b></span>
+        </button>
+      </div>
+      <p class="field-tools-status" id="field-tools-status" role="status" aria-live="polite"></p>
+    </section>
     <div class="count"><span id="cnt"></span><span id="hint">Escriu per cercar</span></div>
 
     <div id="results" role="listbox" aria-label="Resultats"></div>
@@ -985,6 +1007,7 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
       <label class="chk"><input type="checkbox" id="l-nov"><span class="swatch" style="background:#98a29a"></span>Adreces no vigents</label>
       <label class="chk"><input type="checkbox" id="l-cam" checked><span class="swatch" style="background:#d98324"></span>Camins de l'inventari</label>
       <label class="chk"><input type="checkbox" id="l-par" checked><span class="swatch" style="background:#8fd694"></span>Límits de partida</label>
+      <label class="chk"><input type="checkbox" id="l-notes" checked><span class="swatch" style="background:#7655a6"></span>Notes i fotografies</label>
     </div>
     <div class="foot">
       Origen de les dades: Ajuntament de Lleida (inventari de camins i adreces).
@@ -994,6 +1017,81 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
   </aside>
   <div id="map"></div>
 </div>
+<dialog id="field-note-dialog" class="field-dialog">
+  <form id="field-note-form" autocomplete="off">
+    <header class="field-dialog-head">
+      <div>
+        <span class="eyebrow">Nota vinculada al mapa</span>
+        <h2 id="field-note-title">Nova nota</h2>
+      </div>
+      <button type="button" class="field-dialog-x" id="field-note-close" aria-label="Tanca">&times;</button>
+    </header>
+    <div class="field-dialog-body">
+      <p class="field-note-location" id="field-note-location"></p>
+      <label class="field-note-label" for="field-note-text">Què hi vols deixar anotat?</label>
+      <textarea id="field-note-text" rows="7" maxlength="10000" placeholder="Escriu lliurement: incidència, observacions, persones contactades, tasques pendents…"></textarea>
+
+      <fieldset class="field-photo-fieldset">
+        <legend>Fotografies</legend>
+        <div class="field-photo-actions">
+          <label class="field-photo-button" for="field-note-camera">Fes una foto
+            <input class="field-visually-hidden" id="field-note-camera" type="file" accept="image/*" capture="environment">
+          </label>
+          <label class="field-photo-button field-photo-button-secondary" for="field-note-gallery">Tria imatges
+            <input class="field-visually-hidden" id="field-note-gallery" type="file" accept="image/*" multiple>
+          </label>
+        </div>
+        <p class="field-photo-help">Les imatges es redueixen abans de desar-les per ocupar menys espai.</p>
+        <div class="field-photo-grid" id="field-photo-grid" aria-live="polite"></div>
+      </fieldset>
+      <p class="field-dialog-status" id="field-note-status" role="status" aria-live="polite"></p>
+    </div>
+    <footer class="field-dialog-foot">
+      <button type="button" class="field-danger-button" id="field-note-delete" hidden>Elimina la nota</button>
+      <span class="field-dialog-actions">
+        <button type="button" class="field-secondary-button" id="field-note-cancel">Cancel·la</button>
+        <button type="submit" class="field-primary-button" id="field-note-save">Desa la nota</button>
+      </span>
+    </footer>
+  </form>
+</dialog>
+
+<dialog id="field-photo-viewer" class="field-photo-viewer" aria-labelledby="field-photo-viewer-title">
+  <section>
+    <header class="field-photo-viewer-head">
+      <strong id="field-photo-viewer-title">Fotografia de la nota</strong>
+      <span id="field-photo-viewer-count"></span>
+      <button type="button" id="field-photo-viewer-close" aria-label="Tanca la fotografia">&times;</button>
+    </header>
+    <div class="field-photo-viewer-stage">
+      <button type="button" class="field-photo-nav field-photo-prev" id="field-photo-prev" aria-label="Fotografia anterior">‹</button>
+      <img id="field-photo-viewer-image" alt="Fotografia ampliada de la nota">
+      <button type="button" class="field-photo-nav field-photo-next" id="field-photo-next" aria-label="Fotografia següent">›</button>
+    </div>
+    <footer class="field-photo-viewer-foot">
+      <span>Toca les fletxes per veure la resta d'imatges.</span>
+      <a id="field-photo-download" download>Descarrega la imatge</a>
+    </footer>
+  </section>
+</dialog>
+
+<dialog id="field-notes-dialog" class="field-dialog field-notes-dialog">
+  <section>
+    <header class="field-dialog-head">
+      <div>
+        <span class="eyebrow">Treball de camp</span>
+        <h2>Notes desades</h2>
+      </div>
+      <button type="button" class="field-dialog-x" id="field-notes-close" aria-label="Tanca">&times;</button>
+    </header>
+    <div class="field-notes-list" id="field-notes-list"></div>
+    <footer class="field-dialog-foot field-notes-foot">
+      <span class="field-dialog-note">Les notes i les fotos no surten d'aquest dispositiu.</span>
+      <button type="button" class="field-primary-button" id="field-notes-new">Marca una nota al mapa</button>
+    </footer>
+  </section>
+</dialog>
+
 <dialog id="rep">
   <form method="dialog" id="repform" autocomplete="off">
     <header class="rep-head">
@@ -1483,6 +1581,7 @@ search(); syncPartLabels(); syncDots();
 window.D = D; window.XARXA = XARXA; window.ICGC = ICGC; window.MAP = map;
 })();
 </script>
+<script src="map-notes.js"></script>
 <script>/*!
 
 JSZip v3.10.1 - A JavaScript class for generating and reading zip files

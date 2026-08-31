@@ -1,7 +1,7 @@
 {
   "name": "Mapa de l'Horta de Lleida",
   "short_name": "Mapa Horta",
-  "description": "Mapa, adreces, camins i guia d'ús de l'Horta de Lleida.",
+  "description": "Mapa, geolocalització, notes de camp, adreces i camins de l'Horta de Lleida.",
   "lang": "ca",
   "dir": "ltr",
   "start_url": "./index.html",
