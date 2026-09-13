@@ -38,10 +38,21 @@
     deferredPrompt = event;
     if (installButton) installButton.hidden = false;
   });
+
+  /* El navegador només dispara «beforeinstallprompt» quan pot instal·lar l'aplicació:
+     no ho fa si ja està instal·lada ni en navegadors que no ho admeten (Firefox,
+     Safari). Si el botó només aparegués en aquest cas, qui obre la portada des d'un
+     altre navegador no veuria cap manera d'instal·lar-la, i el manual diu que hi és.
+     Per això es mostra sempre, tret que l'aplicació ja s'estigui executant instal·lada. */
+  var jaInstalada = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+                    || window.navigator.standalone === true;
+  if (installButton && !jaInstalada) installButton.hidden = false;
+
   if (installButton) {
     installButton.addEventListener('click', function(){
       if (!deferredPrompt) {
-        installButton.textContent = 'Instal·la-la des del menú del navegador';
+        installButton.textContent = 'Obre el menú del navegador i tria «Instal·la»';
+        installButton.disabled = true;
         return;
       }
       deferredPrompt.prompt();
