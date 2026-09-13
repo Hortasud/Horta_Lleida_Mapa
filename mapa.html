@@ -824,12 +824,12 @@ select:focus{outline:2px solid var(--focus); outline-offset:1px}
 .opac input:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
 
 /* ---------- formulari d'informe ---------- */
-dialog#rep{
+dialog#rep, dialog#robatori{
   border:0; border-radius:12px; padding:0; width:min(680px,94vw); max-height:90dvh;
   background:var(--surface); color:var(--ink); box-shadow:0 24px 60px rgba(0,0,0,.28);
 }
-dialog#rep::backdrop{background:rgba(12,18,14,.55)}
-#repform{display:flex; flex-direction:column; max-height:90dvh}
+dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
+#repform,#robform{display:flex; flex-direction:column; max-height:90dvh}
 .rep-head{
   display:flex; justify-content:space-between; align-items:flex-start; gap:14px;
   padding:18px 22px 14px; border-bottom:1px solid var(--line);
@@ -841,21 +841,25 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
 }
 .rep-x:hover{color:var(--ink); background:var(--surface-2)}
 .rep-body{overflow-y:auto; padding:6px 22px 4px; display:flex; flex-direction:column; gap:14px}
-#rep fieldset{border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:8px}
-#rep legend{
+#rep fieldset,#robatori fieldset{border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:8px}
+#rep legend,#robatori legend{
   font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
   color:var(--accent); padding:10px 0 2px;
 }
-#rep label{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--ink-soft)}
-#rep label.chk, #rep label.inl{flex-direction:row; align-items:center; gap:8px; font-size:13px; color:var(--ink)}
+#rep label,#robatori label{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--ink-soft)}
+#rep label.chk, #rep label.inl,#robatori label.chk,#robatori label.inl{flex-direction:row; align-items:center; gap:8px; font-size:13px; color:var(--ink)}
 #rep input[type=text],#rep input:not([type]),#rep input[type=email],#rep input[type=date],
-#rep textarea,#rep select{
+#rep input[type=tel],#rep input[type=time],#rep textarea,#rep select,
+#robatori input[type=text],#robatori input:not([type]),#robatori input[type=email],
+#robatori input[type=date],#robatori input[type=tel],#robatori input[type=time],
+#robatori textarea,#robatori select{
   padding:8px 10px; border:1px solid var(--line-strong); border-radius:6px;
   background:var(--surface-2); color:var(--ink); font:400 13.5px Archivo,sans-serif;
   width:100%;
 }
-#rep textarea{resize:vertical; line-height:1.5}
-#rep input:focus,#rep textarea:focus,#rep select:focus{
+#rep textarea,#robatori textarea{resize:vertical; line-height:1.5}
+#rep input:focus,#rep textarea:focus,#rep select:focus,
+#robatori input:focus,#robatori textarea:focus,#robatori select:focus{
   outline:2px solid var(--focus); outline-offset:1px; background:var(--surface);
 }
 #rep label.inl select{width:auto}
@@ -877,7 +881,7 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
 }
 .rep-msg{font-size:11.5px; color:var(--ink-faint)}
 .rep-nota{margin:2px 0 0; font-size:11.5px; color:var(--ink-faint); line-height:1.45}
-#rep .seg{margin-top:2px}
+#rep .seg,#robatori .seg{margin-top:2px}
 .rep-actions{display:flex; gap:8px}
 .btn{
   padding:9px 16px; border:0; border-radius:7px; background:var(--accent);
@@ -887,12 +891,20 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
 .btn:disabled{opacity:.55; cursor:default}
 .btn.ghost{background:none; color:var(--ink-soft); border:1px solid var(--line-strong)}
 .btn:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
-.rep-btn{
+.rep-btn,.rob-btn{
   margin-top:9px; width:100%; padding:8px 10px; border:0; border-radius:6px;
   background:var(--accent); color:var(--accent-ink);
   font:600 12.5px Archivo,sans-serif; cursor:pointer;
 }
-.rep-btn:hover{filter:brightness(1.08)}
+.rep-btn:hover,.rob-btn:hover{filter:brightness(1.08)}
+.rob-btn{background:#8f342d}
+.rob-ubicacio{
+  margin:0; padding:10px 12px; border:1px solid var(--line); border-radius:7px;
+  background:var(--surface-2); font-size:12.5px; line-height:1.55; color:var(--ink);
+}
+.rob-opcions{display:flex; gap:14px; flex-wrap:wrap}
+.rob-opcions label{flex-direction:row!important; align-items:center; color:var(--ink)!important; font-size:13px!important}
+.rob-alerta{margin:0; padding:9px 11px; border-left:3px solid #b67428; background:var(--surface-2); color:var(--ink-soft); font-size:11.5px; line-height:1.45}
 @media (max-width:560px){ .g2,.g3,.acts{grid-template-columns:1fr} }
 
 /* ---------- mapa ---------- */
@@ -1053,6 +1065,86 @@ dialog#rep::backdrop{background:rgba(12,18,14,.55)}
       <span class="field-dialog-actions">
         <button type="button" class="field-secondary-button" id="field-note-cancel">Cancel·la</button>
         <button type="submit" class="field-primary-button" id="field-note-save">Desa la nota</button>
+      </span>
+    </footer>
+  </form>
+</dialog>
+<dialog id="robatori">
+  <form id="robform" autocomplete="off">
+    <header class="rep-head">
+      <div>
+        <span class="eyebrow">Comunicació a la patrulla</span>
+        <h2 id="rob-torre">Avís de robatori</h2>
+      </div>
+      <button type="button" class="rep-x" id="rob-close" aria-label="Tanca">&times;</button>
+    </header>
+    <div class="rep-body">
+      <fieldset>
+        <legend>Torre afectada</legend>
+        <p class="rob-ubicacio" id="rob-ubicacio"></p>
+      </fieldset>
+      <fieldset>
+        <legend>Contacte de la patrulla</legend>
+        <label>Telèfon de WhatsApp
+          <input name="contactetel" type="tel" inputmode="tel" required placeholder="Ex.: 600 000 000" autocomplete="off">
+        </label>
+        <p class="rep-nota">S'ha d'introduir només la primera vegada. Per privacitat, es desa únicament en aquest dispositiu i no s'inclou als fitxers de l'aplicació.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Dades de l'associació</legend>
+        <label>Nom de l'associació<input name="assoc" required></label>
+        <div class="g2">
+          <label>Nom i cognoms del representant<input name="repnom" required></label>
+          <label>En qualitat de<input name="repcarrec" value="president/a"></label>
+        </div>
+        <label>Telèfon de l'associació<input name="assoctel" type="tel" inputmode="tel"></label>
+        <p class="rep-nota">Aquestes dades són les mateixes de la resta de formularis i queden desades en aquest navegador.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Dia i hora dels fets</legend>
+        <div class="g2">
+          <label>Dia<input name="robdata" type="date" required></label>
+          <label>Hora aproximada<input name="robhora" type="time" required></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Objectes robats</legend>
+        <div class="rob-opcions" role="radiogroup" aria-label="S'han robat objectes?">
+          <label><input type="radio" name="robobjectes" value="si" required>Sí</label>
+          <label><input type="radio" name="robobjectes" value="no">No</label>
+        </div>
+        <label id="rob-objectes-bloc" hidden>Descripció dels objectes
+          <textarea name="robobjectesdescr" rows="3" placeholder="Indica quins objectes s'han robat i, si és possible, quantitat, marca, model o altres detalls identificatius."></textarea>
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Danys físics o desperfectes</legend>
+        <div class="rob-opcions" role="radiogroup" aria-label="Hi ha danys físics o desperfectes?">
+          <label><input type="radio" name="robdanys" value="si" required>Sí</label>
+          <label><input type="radio" name="robdanys" value="no">No</label>
+        </div>
+        <label id="rob-danys-bloc" hidden>Descripció dels danys
+          <textarea name="robdanysdescr" rows="3" placeholder="Descriu els danys a persones, accessos, portes, finestres, instal·lacions o altres béns."></textarea>
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Altres dades (opcional)</legend>
+        <label>Informació addicional
+          <textarea name="robaltres" rows="3" placeholder="Vehicles, persones observades, testimonis, franja horària, número de denúncia o qualsevol altra dada útil."></textarea>
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Mapa de la zona</legend>
+        <label class="chk"><input type="checkbox" name="robimg" checked>Baixa una imatge del mapa amb la torre marcada</label>
+        <p class="rep-nota">La imatge es descarrega al dispositiu perquè la puguis adjuntar al xat. El missatge també inclou un enllaç directe a la ubicació.</p>
+      </fieldset>
+      <p class="rob-alerta">Aquest avís prepara el missatge, però no el tramet automàticament: cal revisar-lo i prémer «Envia» dins de WhatsApp. En una emergència o si hi ha persones ferides, truca al 112.</p>
+    </div>
+    <footer class="rep-foot">
+      <span class="rep-msg" id="rob-msg">Les dades queden desades només en aquest dispositiu.</span>
+      <span class="rep-actions">
+        <button type="button" class="btn ghost" id="rob-cancel">Cancel·la</button>
+        <button type="submit" class="btn" id="rob-go">Prepara el WhatsApp</button>
       </span>
     </footer>
   </form>
@@ -1249,8 +1341,16 @@ var BASES = {
   topo:    {caps:[TOPO],             fosc:false},
   hibrida: {caps:[TOPO, ORTO_SOBRE], fosc:true, opac:true},
   orto:    {caps:[ORTO],             fosc:true},
-  osm:     {caps:[L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  {maxZoom:19, attribution:'&copy; OpenStreetMap contributors'})], fosc:false}
+  /* Les tessel·les de tile.openstreetmap.org es serveixen des dels servidors
+     voluntaris de l'OSMF, que bloquegen les peticions sense «Referer» (és el
+     cas quan el fitxer s'obre com a file://). Es fa servir el render d'OSM
+     France, que són les mateixes dades d'OSM, arriba fins al nivell 20 i no
+     demana clau. (CARTO, provat el set. 2026, ja exigeix clau d'API i estampa
+     «API KEY REQUIRED» sobre cada tessel·la.) */
+  osm:     {caps:[L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+                  {subdomains:'abc', maxZoom:20, maxNativeZoom:20,
+                   referrerPolicy:'no-referrer-when-downgrade',
+                   attribution:'Dades &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>/ODbL &mdash; render OSM France'})], fosc:false}
 };
 var base = 'topo';
 TOPO.addTo(map);
@@ -1347,17 +1447,18 @@ D.adreces.forEach(function(a,i){
     renderer:cv, radius:4.5, weight:1.4, color:'#ffffff',
     fillColor: a[4] ? '#1d6b86' : '#98a29a', fillOpacity:1
   });
-  m.bindPopup(function(){ return popAdr(a); });
+  m.bindPopup(function(){ return popAdr(a, i); });
   marks.push(m);
   (a[4] ? gAdr : gNov).addLayer(m);
 });
-function popAdr(a){
+function popAdr(a, i){
   return '<p class="pop-t">'+esc(a[0])+'</p><p class="pop-d">'+
     '<b>Partida:</b> '+esc(D.partidaNoms[a[1]])+'<br>'+
     '<b>Número:</b> '+esc(a[5])+
     (a[6] ? '<br><b>Codi DGC:</b> '+esc(a[6]) : '')+
     (a[4] ? '' : '<br><i>No vigent a la base municipal</i>')+
-    '</p>';
+    '</p>'+
+    (Number.isFinite(i) ? '<button type="button" class="rob-btn" data-adreca="'+i+'">Informar d’un robatori per WhatsApp</button>' : '');
 }
 
 /* ---------- fons: mapa OSM o ortofoto ---------- */
@@ -1538,7 +1639,7 @@ function go(n){
   if(r.t==='a'){
     var a=D.adreces[r.i];
     map.flyTo([a[3],a[2]], 18, {duration:.6});
-    L.popup({offset:[0,-4]}).setLatLng([a[3],a[2]]).setContent(popAdr(a)).openOn(map);
+    L.popup({offset:[0,-4]}).setLatLng([a[3],a[2]]).setContent(popAdr(a, r.i)).openOn(map);
   } else if(r.t==='c'){
     var lay=null; gCam.eachLayer(function(){});
     var c=D.camins[r.i];
@@ -2001,13 +2102,63 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
    Genera un .docx (OOXML dins d'un ZIP) sense servidor: el document es
    construeix al navegador i es baixa directament.
    ========================================================================= */
+var HORTA_LOCAL = (function(){
+  "use strict";
+  var CLAU_PERFIL = 'camins-lleida.generic';
+  var CLAU_CONTACTES = 'mapa-horta.contactes';
+  var CAMPS_PERFIL = ['dest','assoc','assocnif','assocadr','assocpob','assoctel','assocmail',
+                      'repnom','repdni','repcarrec','wanom','watel'];
+  function llegeix(clau){
+    try { return JSON.parse(localStorage.getItem(clau) || '{}') || {}; }
+    catch(e){ return {}; }
+  }
+  function escriu(clau, dades){
+    try { localStorage.setItem(clau, JSON.stringify(dades)); }
+    catch(e){ /* l'aplicació continua funcionant si l'emmagatzematge està blocat */ }
+  }
+  function carregaPerfil(form){
+    var d = llegeix(CLAU_PERFIL);
+    CAMPS_PERFIL.forEach(function(k){
+      if(form.elements[k] && d[k] !== undefined && d[k] !== '') form.elements[k].value = d[k];
+    });
+    return d;
+  }
+  function desaPerfil(form){
+    var d = llegeix(CLAU_PERFIL);
+    CAMPS_PERFIL.forEach(function(k){
+      if(form.elements[k]) d[k] = String(form.elements[k].value || '').trim();
+    });
+    escriu(CLAU_PERFIL, d);
+    return d;
+  }
+  function observaPerfil(form){
+    CAMPS_PERFIL.forEach(function(k){
+      if(form.elements[k]) form.elements[k].addEventListener('change', function(){ desaPerfil(form); });
+    });
+  }
+  function carregaContacte(nom){ return llegeix(CLAU_CONTACTES)[nom] || ''; }
+  function desaContacte(nom, valor){
+    var d = llegeix(CLAU_CONTACTES);
+    d[nom] = String(valor || '').trim();
+    escriu(CLAU_CONTACTES, d);
+  }
+  return {
+    campsPerfil: CAMPS_PERFIL,
+    carregaPerfil: carregaPerfil,
+    desaPerfil: desaPerfil,
+    observaPerfil: observaPerfil,
+    carregaContacte: carregaContacte,
+    desaContacte: desaContacte
+  };
+})();
+
 var REP = (function(){
 "use strict";
 
 var dlg = document.getElementById('rep'),
     form = document.getElementById('repform'),
     actual = null;                       // camí seleccionat + punt clicat
-var CLAU = 'camins-lleida.generic';         // dades desades al navegador
+var CLAU = 'camins-lleida.generic';         // compatibilitat amb contactes ja desats
 /* Logotip de l'entitat incrustat al fitxer (base64) perquè el document surti
    amb capçalera sense dependre de cap servidor. */
 var LOGO = '', LOGO_W = 360, LOGO_H = 392;
@@ -2018,21 +2169,14 @@ var LOGO = '', LOGO_W = 360, LOGO_H = 392;
 var WA_SEED = [];
 
 /* ---------- desat local de les dades de l'associació ---------- */
-var CAMPS_DESATS = ['dest','assoc','assocnif','assocadr','assocpob','assoctel','assocmail',
-                    'repnom','repdni','repcarrec','wanom','watel'];
+var CAMPS_DESATS = HORTA_LOCAL.campsPerfil;
 function carregaDesat(){
-  try{
-    var d = JSON.parse(localStorage.getItem(CLAU) || '{}');
-    CAMPS_DESATS.forEach(function(k){ if(d[k]) form.elements[k].value = d[k]; });
-  }catch(e){ /* navegador sense emmagatzematge: es continua igual */ }
+  HORTA_LOCAL.carregaPerfil(form);
 }
 function desa(){
-  try{
-    var d = {};
-    CAMPS_DESATS.forEach(function(k){ d[k] = form.elements[k].value; });
-    localStorage.setItem(CLAU, JSON.stringify(d));
-  }catch(e){}
+  HORTA_LOCAL.desaPerfil(form);
 }
+HORTA_LOCAL.observaPerfil(form);
 
 /* El nom de l'inventari ve prefixat amb el codi («ICLL075- Camí de ...»).
    Per al document interessa la denominació neta; el codi ja va a la seva fila. */
@@ -2076,8 +2220,9 @@ function setMode(m){
   b.addEventListener('click', function(){ setMode(b.dataset.mode); });
 });
 
-document.getElementById('rep-close').addEventListener('click', function(){ dlg.close(); });
-document.getElementById('rep-cancel').addEventListener('click', function(){ dlg.close(); });
+document.getElementById('rep-close').addEventListener('click', function(){ desa(); dlg.close(); });
+document.getElementById('rep-cancel').addEventListener('click', function(){ desa(); dlg.close(); });
+dlg.addEventListener('cancel', desa);
 
 /* =========================================================================
    1. Imatge del camí sobre ortofoto
@@ -2179,6 +2324,54 @@ function imatgeCami(cami, latlng, W, H){
     g.font = '600 13px sans-serif'; g.textBaseline = 'alphabetic';
     g.fillText(objectiu + ' m', 24, H-28);
 
+    return cv.toDataURL('image/png');
+  });
+}
+
+/* Imatge centrada en una torre. Es reutilitza al formulari de robatori perquè
+   la ubicació es pugui adjuntar a WhatsApp sense enviar cap dada a un servidor
+   propi de l'aplicació. */
+function imatgeTorre(latlng, titol, W, H){
+  var z = 17;
+  var centre = projecta(latlng.lng, latlng.lat, z);
+  var x0 = centre[0] - W/2, y0 = centre[1] - H/2;
+  var cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  var g = cv.getContext('2d');
+  g.fillStyle = '#e9ece6'; g.fillRect(0,0,W,H);
+  var tasques = [];
+  for(var tx = Math.floor(x0/TILE); tx <= Math.floor((x0+W)/TILE); tx++){
+    for(var ty = Math.floor(y0/TILE); ty <= Math.floor((y0+H)/TILE); ty++){
+      (function(tx,ty){
+        var url = ICGC + 'orto/MON3857NW/' + z + '/' + tx + '/' + ty + '.png';
+        tasques.push(carregaTessela(url).then(function(im){
+          if(im) g.drawImage(im, tx*TILE - x0, ty*TILE - y0, TILE, TILE);
+        }));
+      })(tx,ty);
+    }
+  }
+  return Promise.all(tasques).then(function(){
+    var mx = W/2, my = H/2;
+    g.beginPath(); g.arc(mx, my, 17, 0, Math.PI*2);
+    g.fillStyle = '#fff'; g.fill();
+    g.beginPath(); g.arc(mx, my, 12, 0, Math.PI*2);
+    g.fillStyle = '#c8382e'; g.fill();
+    g.lineWidth = 3; g.strokeStyle = '#78241f'; g.stroke();
+    g.beginPath(); g.moveTo(mx-7,my); g.lineTo(mx+7,my); g.moveTo(mx,my-7); g.lineTo(mx,my+7);
+    g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke();
+
+    g.fillStyle = 'rgba(255,255,255,.92)';
+    g.fillRect(22, 22, Math.min(W-44, 900), 82);
+    g.fillStyle = '#17231c'; g.font = '700 24px sans-serif';
+    g.fillText(String(titol || 'Torre afectada').slice(0,62), 42, 56);
+    g.font = '500 18px sans-serif';
+    g.fillText('Coordenades: ' + latlng.lat.toFixed(6) + ', ' + latlng.lng.toFixed(6) + ' (WGS84)', 42, 86);
+
+    var mPerPx = 156543.03392 * Math.cos(latlng.lat * Math.PI/180) / Math.pow(2, z);
+    var metres = 100, px = metres / mPerPx;
+    g.fillStyle = 'rgba(255,255,255,.88)'; g.fillRect(22,H-58,px+38,38);
+    g.fillStyle = '#111'; g.fillRect(38,H-34,px,5);
+    g.font = '600 14px sans-serif'; g.fillText(metres + ' m',38,H-40);
     return cv.toDataURL('image/png');
   });
 }
@@ -2899,6 +3092,202 @@ document.addEventListener('click', function(e){
 
 setMode('doc');
 
+return {obre: obre, imatgeTorre: imatgeTorre};
+})();
+
+/* =========================================================================
+   Avís de robatori en una torre per WhatsApp
+   ========================================================================= */
+var ROBATORI = (function(){
+"use strict";
+var dlg = document.getElementById('robatori');
+var form = document.getElementById('robform');
+var msg = document.getElementById('rob-msg');
+var btn = document.getElementById('rob-go');
+var actual = null;
+
+function dos(n){ return String(n).padStart(2, '0'); }
+function escRob(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function araLocal(){
+  var d = new Date();
+  return {
+    data: d.getFullYear() + '-' + dos(d.getMonth()+1) + '-' + dos(d.getDate()),
+    hora: dos(d.getHours()) + ':' + dos(d.getMinutes())
+  };
+}
+function radio(nom){
+  var e = form.querySelector('input[name="'+nom+'"]:checked');
+  return e ? e.value : '';
+}
+function actualitzaCondicional(nom, blocId, campNom){
+  var si = radio(nom) === 'si';
+  var bloc = document.getElementById(blocId);
+  bloc.hidden = !si;
+  form.elements[campNom].required = si;
+  if(!si) form.elements[campNom].value = '';
+}
+[].forEach.call(form.querySelectorAll('input[name="robobjectes"]'), function(e){
+  e.addEventListener('change', function(){ actualitzaCondicional('robobjectes','rob-objectes-bloc','robobjectesdescr'); });
+});
+[].forEach.call(form.querySelectorAll('input[name="robdanys"]'), function(e){
+  e.addEventListener('change', function(){ actualitzaCondicional('robdanys','rob-danys-bloc','robdanysdescr'); });
+});
+
+function desaLocals(){
+  HORTA_LOCAL.desaPerfil(form);
+  HORTA_LOCAL.desaContacte('patrullaGuardiaUrbanaHorta', form.elements.contactetel.value);
+}
+HORTA_LOCAL.observaPerfil(form);
+form.elements.contactetel.addEventListener('change', desaLocals);
+
+function ubicacioHTML(a){
+  return '<b>' + escRob(a[0]) + '</b><br>' +
+    'Partida: ' + escRob(D.partidaNoms[a[1]]) + '<br>' +
+    'Número: ' + escRob(a[5]) + '<br>' +
+    'Coordenades: ' + a[3].toFixed(6) + ', ' + a[2].toFixed(6) + ' (WGS84)';
+}
+function obre(i){
+  var a = D.adreces[i];
+  if(!a) return;
+  actual = {i:i, a:a, latlng:{lat:a[3], lng:a[2]}};
+  form.reset();
+  HORTA_LOCAL.carregaPerfil(form);
+  form.elements.contactetel.value = HORTA_LOCAL.carregaContacte('patrullaGuardiaUrbanaHorta');
+  var ara = araLocal();
+  form.elements.robdata.value = ara.data;
+  form.elements.robhora.value = ara.hora;
+  document.getElementById('rob-torre').textContent = a[0];
+  document.getElementById('rob-ubicacio').innerHTML = ubicacioHTML(a);
+  actualitzaCondicional('robobjectes','rob-objectes-bloc','robobjectesdescr');
+  actualitzaCondicional('robdanys','rob-danys-bloc','robdanysdescr');
+  msg.textContent = 'Les dades queden desades només en aquest dispositiu.';
+  btn.disabled = false;
+  if(window.MAP) window.MAP.closePopup();
+  dlg.showModal();
+  (form.elements.contactetel.value ? form.elements.robobjectes[0] : form.elements.contactetel).focus();
+}
+
+function dataCatalana(iso){
+  var p = String(iso || '').split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : iso;
+}
+function netejaTelefon(tel){
+  var t = String(tel || '').replace(/\D/g, '');
+  if(t.length === 9) t = '34' + t;
+  return t;
+}
+function textMissatge(v){
+  var a = actual.a, l = [];
+  l.push('AVÍS DE ROBATORI — HORTA DE LLEIDA');
+  l.push('');
+  l.push('Us comuniquem un robatori en una torre de l’Horta de Lleida.');
+  l.push('');
+  l.push('UBICACIÓ');
+  l.push('Adreça: ' + a[0]);
+  l.push('Partida: ' + D.partidaNoms[a[1]]);
+  l.push('Número: ' + a[5]);
+  if(a[6]) l.push('Codi DGC: ' + a[6]);
+  l.push('Coordenades: ' + actual.latlng.lat.toFixed(6) + ', ' + actual.latlng.lng.toFixed(6) + ' (WGS84)');
+  l.push('Mapa: https://www.google.com/maps?q=' + actual.latlng.lat.toFixed(6) + ',' + actual.latlng.lng.toFixed(6));
+  l.push('');
+  l.push('DATA I HORA DELS FETS');
+  l.push(dataCatalana(v.robdata) + ' a les ' + v.robhora + ' h');
+  l.push('');
+  l.push('OBJECTES ROBATS');
+  l.push(v.robobjectes === 'si' ? 'Sí' : 'No');
+  if(v.robobjectesdescr) l.push('Descripció: ' + v.robobjectesdescr);
+  l.push('');
+  l.push('DANYS FÍSICS O DESPERFECTES');
+  l.push(v.robdanys === 'si' ? 'Sí' : 'No');
+  if(v.robdanysdescr) l.push('Descripció: ' + v.robdanysdescr);
+  if(v.robaltres){
+    l.push('');
+    l.push('ALTRES DADES');
+    l.push(v.robaltres);
+  }
+  l.push('');
+  l.push('Comunicació de: ' + v.repnom + (v.repcarrec ? ', ' + v.repcarrec : '') + ' — ' + v.assoc + '.');
+  if(v.assoctel) l.push('Telèfon de contacte de l’associació: ' + v.assoctel + '.');
+  if(v.robimg) l.push('S’adjunta també una imatge de la zona amb la torre afectada marcada.');
+  l.push('');
+  l.push('Gràcies per la vostra atenció i per la tasca dels cossos de seguretat.');
+  return l.join('\n');
+}
+function baixaImatge(dataUrl){
+  var a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'mapa-robatori-torre-' + String(actual.a[5] || actual.i).replace(/[^\w-]/g,'') + '.png';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ a.remove(); }, 3000);
+}
+function vesAWhatsApp(finestra, url){
+  dlg.close();
+  if(finestra && !finestra.closed){ finestra.location.replace(url); }
+  else { window.location.href = url; }
+}
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  if(!actual || !form.reportValidity()) return;
+  var tel = netejaTelefon(form.elements.contactetel.value);
+  if(tel.length < 9 || tel.length > 15){
+    form.elements.contactetel.setCustomValidity('Escriu un número de telèfon vàlid, amb prefix internacional si cal.');
+    form.elements.contactetel.reportValidity();
+    return;
+  }
+  form.elements.contactetel.setCustomValidity('');
+  var v = {
+    assoc: form.elements.assoc.value.trim(),
+    repnom: form.elements.repnom.value.trim(),
+    repcarrec: form.elements.repcarrec.value.trim(),
+    assoctel: form.elements.assoctel.value.trim(),
+    robdata: form.elements.robdata.value,
+    robhora: form.elements.robhora.value,
+    robobjectes: radio('robobjectes'),
+    robobjectesdescr: form.elements.robobjectesdescr.value.trim(),
+    robdanys: radio('robdanys'),
+    robdanysdescr: form.elements.robdanysdescr.value.trim(),
+    robaltres: form.elements.robaltres.value.trim(),
+    robimg: form.elements.robimg.checked
+  };
+  desaLocals();
+  var url = 'https://wa.me/' + tel + '?text=' + encodeURIComponent(textMissatge(v));
+  var finestra = window.open('', '_blank');
+  if(finestra){
+    try{
+      finestra.document.documentElement.lang = 'ca';
+      finestra.document.title = 'Preparant WhatsApp';
+      finestra.document.body.style.cssText = 'margin:0;display:grid;min-height:100vh;place-items:center;background:#f3f1e8;color:#173f32;font:600 18px system-ui,sans-serif;text-align:center;padding:24px;box-sizing:border-box';
+      finestra.document.body.textContent = 'Preparant el mapa i el missatge de WhatsApp…';
+    }catch(err){}
+  }
+  btn.disabled = true;
+  msg.textContent = v.robimg ? 'Preparant el mapa de la torre…' : 'Obrint el WhatsApp…';
+  if(!v.robimg){ vesAWhatsApp(finestra, url); return; }
+  REP.imatgeTorre(actual.latlng, actual.a[0], 1400, 950).then(function(img){
+    baixaImatge(img);
+    msg.textContent = 'Mapa baixat. Ara s’obrirà el WhatsApp; adjunta-hi la imatge descarregada.';
+  }).catch(function(){
+    msg.textContent = 'No s’ha pogut baixar la imatge, però el missatge inclou l’enllaç al mapa.';
+  }).then(function(){
+    setTimeout(function(){ vesAWhatsApp(finestra, url); }, 350);
+  });
+});
+
+form.elements.contactetel.addEventListener('input', function(){ this.setCustomValidity(''); });
+document.getElementById('rob-close').addEventListener('click', function(){ desaLocals(); dlg.close(); });
+document.getElementById('rob-cancel').addEventListener('click', function(){ desaLocals(); dlg.close(); });
+dlg.addEventListener('cancel', desaLocals);
+document.addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.rob-btn') : null;
+  if(!b) return;
+  e.preventDefault();
+  obre(+b.dataset.adreca);
+});
 return {obre: obre};
 })();
 </script>
