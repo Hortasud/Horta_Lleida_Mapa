@@ -42,6 +42,10 @@
   var notes = [];
   var noteMarkers = {};
   var notesLayer = L.layerGroup().addTo(map);
+  var locationPane = map.getPane('fieldLocationPane') || map.createPane('fieldLocationPane');
+  locationPane.style.zIndex = '625';
+  locationPane.style.pointerEvents = 'none';
+  var locationRenderer = L.svg({pane:'fieldLocationPane', padding:0.25});
   var locationLayer = L.layerGroup().addTo(map);
   var currentMarker = null;
   var accuracyCircle = null;
@@ -509,6 +513,8 @@
       opacity:.7,
       fillColor:'#1677d2',
       fillOpacity:.11,
+      pane:'fieldLocationPane',
+      renderer:locationRenderer,
       interactive:false
     }).addTo(locationLayer);
     currentMarker = L.marker([point.lat, point.lng], {
@@ -518,6 +524,7 @@
         iconSize:[20,20],
         iconAnchor:[10,10]
       }),
+      pane:'fieldLocationPane',
       interactive:false
     }).addTo(locationLayer);
     if(centre) map.setView([point.lat, point.lng], Math.max(map.getZoom(), 17), {animate:true});
