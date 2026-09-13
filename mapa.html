@@ -824,12 +824,12 @@ select:focus{outline:2px solid var(--focus); outline-offset:1px}
 .opac input:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
 
 /* ---------- formulari d'informe ---------- */
-dialog#rep, dialog#robatori{
+dialog#rep, dialog#robatori, dialog#abocament{
   border:0; border-radius:12px; padding:0; width:min(680px,94vw); max-height:90dvh;
   background:var(--surface); color:var(--ink); box-shadow:0 24px 60px rgba(0,0,0,.28);
 }
-dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
-#repform,#robform{display:flex; flex-direction:column; max-height:90dvh}
+dialog#rep::backdrop, dialog#robatori::backdrop, dialog#abocament::backdrop{background:rgba(12,18,14,.55)}
+#repform,#robform,#aboform{display:flex; flex-direction:column; max-height:90dvh}
 .rep-head{
   display:flex; justify-content:space-between; align-items:flex-start; gap:14px;
   padding:18px 22px 14px; border-bottom:1px solid var(--line);
@@ -841,25 +841,29 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
 }
 .rep-x:hover{color:var(--ink); background:var(--surface-2)}
 .rep-body{overflow-y:auto; padding:6px 22px 4px; display:flex; flex-direction:column; gap:14px}
-#rep fieldset,#robatori fieldset{border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:8px}
-#rep legend,#robatori legend{
+#rep fieldset,#robatori fieldset,#abocament fieldset{border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:8px}
+#rep legend,#robatori legend,#abocament legend{
   font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
   color:var(--accent); padding:10px 0 2px;
 }
-#rep label,#robatori label{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--ink-soft)}
-#rep label.chk, #rep label.inl,#robatori label.chk,#robatori label.inl{flex-direction:row; align-items:center; gap:8px; font-size:13px; color:var(--ink)}
+#rep label,#robatori label,#abocament label{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--ink-soft)}
+#rep label.chk, #rep label.inl,#robatori label.chk,#robatori label.inl,#abocament label.chk,#abocament label.inl{flex-direction:row; align-items:center; gap:8px; font-size:13px; color:var(--ink)}
 #rep input[type=text],#rep input:not([type]),#rep input[type=email],#rep input[type=date],
 #rep input[type=tel],#rep input[type=time],#rep textarea,#rep select,
 #robatori input[type=text],#robatori input:not([type]),#robatori input[type=email],
 #robatori input[type=date],#robatori input[type=tel],#robatori input[type=time],
-#robatori textarea,#robatori select{
+#robatori textarea,#robatori select,
+#abocament input[type=text],#abocament input:not([type]),#abocament input[type=email],
+#abocament input[type=date],#abocament input[type=tel],#abocament input[type=time],
+#abocament textarea,#abocament select{
   padding:8px 10px; border:1px solid var(--line-strong); border-radius:6px;
   background:var(--surface-2); color:var(--ink); font:400 13.5px Archivo,sans-serif;
   width:100%;
 }
-#rep textarea,#robatori textarea{resize:vertical; line-height:1.5}
+#rep textarea,#robatori textarea,#abocament textarea{resize:vertical; line-height:1.5}
 #rep input:focus,#rep textarea:focus,#rep select:focus,
-#robatori input:focus,#robatori textarea:focus,#robatori select:focus{
+#robatori input:focus,#robatori textarea:focus,#robatori select:focus,
+#abocament input:focus,#abocament textarea:focus,#abocament select:focus{
   outline:2px solid var(--focus); outline-offset:1px; background:var(--surface);
 }
 #rep label.inl select{width:auto}
@@ -881,7 +885,7 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
 }
 .rep-msg{font-size:11.5px; color:var(--ink-faint)}
 .rep-nota{margin:2px 0 0; font-size:11.5px; color:var(--ink-faint); line-height:1.45}
-#rep .seg,#robatori .seg{margin-top:2px}
+#rep .seg,#robatori .seg,#abocament .seg{margin-top:2px}
 .rep-actions{display:flex; gap:8px}
 .btn{
   padding:9px 16px; border:0; border-radius:7px; background:var(--accent);
@@ -890,6 +894,7 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
 .btn:hover{filter:brightness(1.08)}
 .btn:disabled{opacity:.55; cursor:default}
 .btn.ghost{background:none; color:var(--ink-soft); border:1px solid var(--line-strong)}
+.btn.link{display:inline-flex; align-items:center; justify-content:center; text-decoration:none}
 .btn:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
 .rep-btn,.rob-btn{
   margin-top:9px; width:100%; padding:8px 10px; border:0; border-radius:6px;
@@ -905,6 +910,14 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
 .rob-opcions{display:flex; gap:14px; flex-wrap:wrap}
 .rob-opcions label{flex-direction:row!important; align-items:center; color:var(--ink)!important; font-size:13px!important}
 .rob-alerta{margin:0; padding:9px 11px; border-left:3px solid #b67428; background:var(--surface-2); color:var(--ink-soft); font-size:11.5px; line-height:1.45}
+dialog#abocament-avis{
+  border:0; border-radius:12px; padding:0; width:min(540px,94vw);
+  background:var(--surface); color:var(--ink); box-shadow:0 24px 60px rgba(0,0,0,.28);
+}
+dialog#abocament-avis::backdrop{background:rgba(12,18,14,.58)}
+.abo-avis-body{padding:8px 22px 20px; font-size:13px; line-height:1.55}
+.abo-avis-body strong{color:#8f342d}
+.abo-avis-actions{display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap; padding:14px 22px 18px; border-top:1px solid var(--line); background:var(--surface-2)}
 @media (max-width:560px){ .g2,.g3,.acts{grid-template-columns:1fr} }
 
 /* ---------- mapa ---------- */
@@ -993,6 +1006,9 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
         </button>
         <button type="button" class="field-tool-btn" id="notes-open">
           <span class="field-tool-icon" aria-hidden="true">▤</span><span>Notes <b id="notes-count">0</b></span>
+        </button>
+        <button type="button" class="field-tool-btn field-tool-btn-wide" id="dump-free" aria-pressed="false">
+          <span class="field-tool-icon" aria-hidden="true">⚠</span><span>Avisar d'un abocament</span>
         </button>
       </div>
       <p class="field-tools-status" id="field-tools-status" role="status" aria-live="polite"></p>
@@ -1138,6 +1154,10 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
         <label class="chk"><input type="checkbox" name="robimg" checked>Baixa una imatge del mapa amb la torre marcada</label>
         <p class="rep-nota">La imatge es descarrega al dispositiu perquè la puguis adjuntar al xat. El missatge també inclou un enllaç directe a la ubicació.</p>
       </fieldset>
+      <fieldset>
+        <legend>Abans d'enviar</legend>
+        <label class="chk"><input type="checkbox" name="robconfirma" required>Confirmo que els fets ja s'han comunicat al 112 i que els propietaris efectuaran la denúncia corresponent.</label>
+      </fieldset>
       <p class="rob-alerta">Aquest avís prepara el missatge, però no el tramet automàticament: cal revisar-lo i prémer «Envia» dins de WhatsApp. En una emergència o si hi ha persones ferides, truca al 112.</p>
     </div>
     <footer class="rep-foot">
@@ -1145,6 +1165,96 @@ dialog#rep::backdrop, dialog#robatori::backdrop{background:rgba(12,18,14,.55)}
       <span class="rep-actions">
         <button type="button" class="btn ghost" id="rob-cancel">Cancel·la</button>
         <button type="submit" class="btn" id="rob-go">Prepara el WhatsApp</button>
+      </span>
+    </footer>
+  </form>
+</dialog>
+
+<dialog id="abocament-avis" aria-labelledby="abo-avis-titol">
+  <header class="rep-head">
+    <div>
+      <span class="eyebrow">Abans d'avisar la patrulla</span>
+      <h2 id="abo-avis-titol">Comprova que hi ha indicis identificatius</h2>
+    </div>
+    <button type="button" class="rep-x" id="abo-avis-close" aria-label="Tanca">&times;</button>
+  </header>
+  <div class="abo-avis-body">
+    <p><strong>Només s'ha de comunicar l'abocament a la Guàrdia Urbana quan s'hi vegin documents o altres indicis que puguin permetre identificar-ne els autors.</strong></p>
+    <p>Comprova-ho visualment i no manipulis residus perillosos. Si no hi ha cap indici identificatiu, comunica la incidència mitjançant l'aplicació municipal Appunta perquè se'n gestioni la retirada.</p>
+  </div>
+  <footer class="abo-avis-actions">
+    <button type="button" class="btn ghost" id="abo-avis-cancel">Cancel·la</button>
+    <a class="btn ghost link" href="https://www.paeria.cat/ca/serveis/apps-aplicacions-mobils/noticies/appunta-nova-versio-de-l2019app" target="_blank" rel="noopener" id="abo-appunta">No hi ha indicis: obre Appunta</a>
+    <button type="button" class="btn" id="abo-start">Sí, hi ha indicis: marca el punt</button>
+  </footer>
+</dialog>
+
+<dialog id="abocament" aria-labelledby="abo-titol">
+  <form id="aboform" autocomplete="off">
+    <header class="rep-head">
+      <div>
+        <span class="eyebrow">Comunicació a la patrulla</span>
+        <h2 id="abo-titol">Avís d'abocament de brossa</h2>
+      </div>
+      <button type="button" class="rep-x" id="abo-close" aria-label="Tanca">&times;</button>
+    </header>
+    <div class="rep-body">
+      <fieldset>
+        <legend>Ubicació de l'abocament</legend>
+        <p class="rob-ubicacio" id="abo-ubicacio"></p>
+        <label>Adreça o referència del lloc
+          <input name="aboadreca" required placeholder="Ex.: camí de..., prop del número..., partida...">
+        </label>
+      </fieldset>
+      <fieldset>
+        <legend>Contacte de la patrulla</legend>
+        <label>Telèfon de WhatsApp
+          <input name="contactetel" type="tel" inputmode="tel" required placeholder="Ex.: 600 000 000" autocomplete="off">
+        </label>
+        <p class="rep-nota">És el mateix contacte del formulari de robatori. Es desa només en aquest dispositiu i no s'inclou als fitxers de l'aplicació.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Dades de l'associació</legend>
+        <label>Nom de l'associació<input name="assoc" required></label>
+        <div class="g2">
+          <label>Nom i cognoms del representant<input name="repnom" required></label>
+          <label>En qualitat de<input name="repcarrec" value="president/a"></label>
+        </div>
+        <label>Telèfon de l'associació<input name="assoctel" type="tel" inputmode="tel"></label>
+        <p class="rep-nota">Aquestes dades es comparteixen amb la resta de formularis i no cal tornar-les a escriure.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Dia i hora de l'observació</legend>
+        <div class="g2">
+          <label>Dia<input name="abodata" type="date" required></label>
+          <label>Hora aproximada<input name="abohora" type="time" required></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Informació de l'abocament</legend>
+        <label>Descripció dels residus
+          <textarea name="aboresidus" rows="3" required placeholder="Indica el tipus de residus, volum aproximat i qualsevol element destacable."></textarea>
+        </label>
+        <label>Documents o indicis identificatius visibles
+          <textarea name="aboindicis" rows="3" required placeholder="Descriu els indicis que podrien permetre identificar-ne els autors, sense retirar-los del lloc."></textarea>
+        </label>
+        <label>Altres dades (opcional)
+          <textarea name="aboaltres" rows="3" placeholder="Vehicles observats, testimonis, accés al lloc o qualsevol altra dada útil."></textarea>
+        </label>
+        <label class="chk"><input type="checkbox" name="aboconfirma" required>Confirmo que he verificat que hi ha indicis identificatius visibles.</label>
+      </fieldset>
+      <fieldset>
+        <legend>Mapa de la zona</legend>
+        <label class="chk"><input type="checkbox" name="aboimg" checked>Baixa una imatge del mapa amb l'abocament marcat</label>
+        <p class="rep-nota">La imatge es descarrega perquè la puguis adjuntar al xat. El missatge també inclou l'enllaç directe a la ubicació.</p>
+      </fieldset>
+      <p class="rob-alerta">Revisa el missatge i envia'l tu des de WhatsApp. Si no hi ha indicis que permetin identificar els autors, cancel·la aquest avís i comunica la incidència amb Appunta.</p>
+    </div>
+    <footer class="rep-foot">
+      <span class="rep-msg" id="abo-msg">Les dades queden desades només en aquest dispositiu.</span>
+      <span class="rep-actions">
+        <button type="button" class="btn ghost" id="abo-cancel">Cancel·la</button>
+        <button type="submit" class="btn" id="abo-go">Prepara el WhatsApp</button>
       </span>
     </footer>
   </form>
@@ -3092,7 +3202,7 @@ document.addEventListener('click', function(e){
 
 setMode('doc');
 
-return {obre: obre, imatgeTorre: imatgeTorre};
+return {obre: obre, imatgeTorre: imatgeTorre, partidaDe: partidaDe};
 })();
 
 /* =========================================================================
@@ -3185,6 +3295,7 @@ function textMissatge(v){
   l.push('AVÍS DE ROBATORI — HORTA DE LLEIDA');
   l.push('');
   l.push('Us comuniquem un robatori en una torre de l’Horta de Lleida.');
+  l.push('Els fets ja han estat comunicats al 112 i els propietaris efectuaran la denúncia corresponent.');
   l.push('');
   l.push('UBICACIÓ');
   l.push('Adreça: ' + a[0]);
@@ -3278,7 +3389,10 @@ form.addEventListener('submit', function(e){
   });
 });
 
-form.elements.contactetel.addEventListener('input', function(){ this.setCustomValidity(''); });
+form.elements.contactetel.addEventListener('input', function(){
+  this.setCustomValidity('');
+  HORTA_LOCAL.desaContacte('patrullaGuardiaUrbanaHorta', this.value);
+});
 document.getElementById('rob-close').addEventListener('click', function(){ desaLocals(); dlg.close(); });
 document.getElementById('rob-cancel').addEventListener('click', function(){ desaLocals(); dlg.close(); });
 dlg.addEventListener('cancel', desaLocals);
@@ -3289,6 +3403,230 @@ document.addEventListener('click', function(e){
   obre(+b.dataset.adreca);
 });
 return {obre: obre};
+})();
+
+/* =========================================================================
+   Avís d'abocament de brossa amb indicis identificatius
+   ========================================================================= */
+var ABOCAMENT = (function(){
+"use strict";
+var avisDlg = document.getElementById('abocament-avis');
+var dlg = document.getElementById('abocament');
+var form = document.getElementById('aboform');
+var eina = document.getElementById('dump-free');
+var mapEl = document.getElementById('map');
+var estat = document.getElementById('field-tools-status');
+var msg = document.getElementById('abo-msg');
+var btn = document.getElementById('abo-go');
+var punt = null, partida = '', marcant = false, pista = null;
+
+function dos(n){ return String(n).padStart(2, '0'); }
+function araLocal(){
+  var d = new Date();
+  return {
+    data:d.getFullYear() + '-' + dos(d.getMonth()+1) + '-' + dos(d.getDate()),
+    hora:dos(d.getHours()) + ':' + dos(d.getMinutes())
+  };
+}
+function posaEstat(text, error){
+  estat.textContent = text || '';
+  if(error) estat.dataset.tone = 'error'; else delete estat.dataset.tone;
+}
+function creaPista(){
+  var control = L.control({position:'bottomright'});
+  control.onAdd = function(){
+    var caixa = L.DomUtil.create('div', 'field-pick-hint');
+    caixa.innerHTML = 'Toca el punt de l’abocament<small>Prem Esc o torna a prémer el botó per cancel·lar.</small>';
+    L.DomEvent.disableClickPropagation(caixa);
+    return caixa;
+  };
+  return control;
+}
+function aturaMarcatge(cancellat){
+  if(!marcant) return;
+  marcant = false;
+  eina.setAttribute('aria-pressed','false');
+  mapEl.classList.remove('field-pick-active');
+  if(pista){ MAP.removeControl(pista); pista = null; }
+  if(cancellat) posaEstat('Marcatge de l’abocament cancel·lat.');
+}
+function iniciaMarcatge(){
+  if(marcant){ aturaMarcatge(true); return; }
+  if(avisDlg.open) avisDlg.close();
+  document.dispatchEvent(new CustomEvent('horta:map-pick-start',{detail:{source:'abocament'}}));
+  MAP.invalidateSize({pan:false});
+  marcant = true;
+  eina.setAttribute('aria-pressed','true');
+  mapEl.classList.add('field-pick-active');
+  pista = creaPista(); pista.addTo(MAP);
+  posaEstat('Toca el punt exacte on hi ha l’abocament.');
+}
+function obreAvis(){
+  if(marcant){ aturaMarcatge(true); return; }
+  document.dispatchEvent(new CustomEvent('horta:map-pick-start',{detail:{source:'abocament-avis'}}));
+  avisDlg.showModal();
+}
+function desaLocals(){
+  HORTA_LOCAL.desaPerfil(form);
+  HORTA_LOCAL.desaContacte('patrullaGuardiaUrbanaHorta', form.elements.contactetel.value);
+}
+HORTA_LOCAL.observaPerfil(form);
+form.elements.contactetel.addEventListener('change', desaLocals);
+
+function obreForm(latlng){
+  punt = {lat:Number(latlng.lat),lng:Number(latlng.lng)};
+  partida = REP.partidaDe(punt) || '';
+  form.reset();
+  HORTA_LOCAL.carregaPerfil(form);
+  form.elements.contactetel.value = HORTA_LOCAL.carregaContacte('patrullaGuardiaUrbanaHorta');
+  var ara = araLocal();
+  form.elements.abodata.value = ara.data;
+  form.elements.abohora.value = ara.hora;
+  document.getElementById('abo-ubicacio').textContent =
+    (partida ? 'Partida: ' + partida + ' · ' : '') +
+    'Coordenades: ' + punt.lat.toFixed(6) + ', ' + punt.lng.toFixed(6) + ' (WGS84)';
+  msg.textContent = 'Les dades queden desades només en aquest dispositiu.';
+  btn.disabled = false;
+  dlg.showModal();
+  (form.elements.contactetel.value ? form.elements.aboadreca : form.elements.contactetel).focus();
+}
+function acabaMarcatge(latlng){
+  if(!marcant || !latlng) return;
+  aturaMarcatge(false);
+  posaEstat('Punt de l’abocament marcat.');
+  obreForm(latlng);
+}
+function dataCatalana(iso){
+  var p = String(iso || '').split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : iso;
+}
+function telefonNet(tel){
+  var t = String(tel || '').replace(/\D/g,'');
+  if(t.length === 9) t = '34' + t;
+  return t;
+}
+function textMissatge(v){
+  var l = [];
+  l.push('AVÍS D’ABOCAMENT AMB INDICIS IDENTIFICATIUS — HORTA DE LLEIDA');
+  l.push('');
+  l.push('Us comuniquem un abocament de brossa en què s’han observat documents o indicis que podrien permetre identificar-ne els autors.');
+  l.push('');
+  l.push('UBICACIÓ');
+  l.push('Adreça o referència: ' + v.aboadreca);
+  if(partida) l.push('Partida: ' + partida);
+  l.push('Coordenades: ' + punt.lat.toFixed(6) + ', ' + punt.lng.toFixed(6) + ' (WGS84)');
+  l.push('Mapa: https://www.google.com/maps?q=' + punt.lat.toFixed(6) + ',' + punt.lng.toFixed(6));
+  l.push('');
+  l.push('DATA I HORA DE L’OBSERVACIÓ');
+  l.push(dataCatalana(v.abodata) + ' a les ' + v.abohora + ' h');
+  l.push('');
+  l.push('RESIDUS ABOCATS');
+  l.push(v.aboresidus);
+  l.push('');
+  l.push('INDICIS IDENTIFICATIUS VISIBLES');
+  l.push(v.aboindicis);
+  if(v.aboaltres){
+    l.push('');
+    l.push('ALTRES DADES');
+    l.push(v.aboaltres);
+  }
+  l.push('');
+  l.push('Comunicació de: ' + v.repnom + (v.repcarrec ? ', ' + v.repcarrec : '') + ' — ' + v.assoc + '.');
+  if(v.assoctel) l.push('Telèfon de contacte de l’associació: ' + v.assoctel + '.');
+  if(v.aboimg) l.push('S’adjunta també una imatge de la zona amb el punt de l’abocament marcat.');
+  l.push('');
+  l.push('Gràcies per la vostra atenció i per la tasca dels cossos de seguretat.');
+  return l.join('\n');
+}
+function baixaImatge(dataUrl){
+  var a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'mapa-abocament-' + punt.lat.toFixed(5).replace('.','_') + '-' + punt.lng.toFixed(5).replace('.','_') + '.png';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ a.remove(); },3000);
+}
+function vesAWhatsApp(finestra,url){
+  dlg.close();
+  if(finestra && !finestra.closed) finestra.location.replace(url);
+  else window.location.href = url;
+}
+function preparaFinestra(){
+  var w = window.open('', '_blank');
+  if(w){
+    try{
+      w.document.documentElement.lang = 'ca';
+      w.document.title = 'Preparant WhatsApp';
+      w.document.body.style.cssText = 'margin:0;display:grid;min-height:100vh;place-items:center;background:#f3f1e8;color:#173f32;font:600 18px system-ui,sans-serif;text-align:center;padding:24px;box-sizing:border-box';
+      w.document.body.textContent = 'Preparant el mapa i el missatge de WhatsApp…';
+    }catch(err){}
+  }
+  return w;
+}
+
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!punt || !form.reportValidity()) return;
+  var tel = telefonNet(form.elements.contactetel.value);
+  if(tel.length < 9 || tel.length > 15){
+    form.elements.contactetel.setCustomValidity('Escriu un número de telèfon vàlid, amb prefix internacional si cal.');
+    form.elements.contactetel.reportValidity();
+    return;
+  }
+  form.elements.contactetel.setCustomValidity('');
+  var v = {
+    aboadreca:form.elements.aboadreca.value.trim(),
+    abodata:form.elements.abodata.value,
+    abohora:form.elements.abohora.value,
+    aboresidus:form.elements.aboresidus.value.trim(),
+    aboindicis:form.elements.aboindicis.value.trim(),
+    aboaltres:form.elements.aboaltres.value.trim(),
+    assoc:form.elements.assoc.value.trim(),
+    repnom:form.elements.repnom.value.trim(),
+    repcarrec:form.elements.repcarrec.value.trim(),
+    assoctel:form.elements.assoctel.value.trim(),
+    aboimg:form.elements.aboimg.checked
+  };
+  desaLocals();
+  var url = 'https://wa.me/' + tel + '?text=' + encodeURIComponent(textMissatge(v));
+  var finestra = preparaFinestra();
+  btn.disabled = true;
+  msg.textContent = v.aboimg ? 'Preparant el mapa de l’abocament…' : 'Obrint el WhatsApp…';
+  if(!v.aboimg){ vesAWhatsApp(finestra,url); return; }
+  REP.imatgeTorre(punt,'Abocament de brossa',1400,950).then(function(img){
+    baixaImatge(img);
+    msg.textContent = 'Mapa baixat. Ara s’obrirà el WhatsApp; adjunta-hi la imatge descarregada.';
+  }).catch(function(){
+    msg.textContent = 'No s’ha pogut baixar la imatge, però el missatge inclou l’enllaç al mapa.';
+  }).then(function(){
+    setTimeout(function(){ vesAWhatsApp(finestra,url); },350);
+  });
+});
+
+eina.addEventListener('click',obreAvis);
+document.getElementById('abo-start').addEventListener('click',iniciaMarcatge);
+document.getElementById('abo-avis-close').addEventListener('click',function(){ avisDlg.close(); });
+document.getElementById('abo-avis-cancel').addEventListener('click',function(){ avisDlg.close(); });
+document.getElementById('abo-appunta').addEventListener('click',function(){ avisDlg.close(); });
+document.getElementById('abo-close').addEventListener('click',function(){ desaLocals(); dlg.close(); });
+document.getElementById('abo-cancel').addEventListener('click',function(){ desaLocals(); dlg.close(); });
+dlg.addEventListener('cancel',desaLocals);
+form.elements.contactetel.addEventListener('input',function(){
+  this.setCustomValidity('');
+  HORTA_LOCAL.desaContacte('patrullaGuardiaUrbanaHorta',this.value);
+});
+mapEl.addEventListener('click',function(e){
+  if(!marcant) return;
+  var control = e.target.closest ? e.target.closest('.leaflet-control,.leaflet-popup') : null;
+  if(control) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  acabaMarcatge(MAP.mouseEventToLatLng(e));
+},true);
+MAP.on('click',function(e){ acabaMarcatge(e.latlng); });
+document.addEventListener('keydown',function(e){ if(e.key === 'Escape' && marcant) aturaMarcatge(true); });
+document.addEventListener('horta:map-pick-start',function(e){
+  if(!e.detail || e.detail.source !== 'abocament') aturaMarcatge(false);
+});
+return {atura:aturaMarcatge};
 })();
 </script>
 </body>

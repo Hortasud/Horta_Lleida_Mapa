@@ -521,6 +521,7 @@
 
   function locate(openNote){
     stopPick(false);
+    document.dispatchEvent(new CustomEvent('horta:map-pick-start', {detail:{source:'geolocalitzacio'}}));
     setGeoBusy(true);
     setToolsStatus('Buscant la teva ubicació…');
     requestLocation().then(function(position){
@@ -546,6 +547,7 @@
 
   function startPick(){
     if(pickMode){ stopPick(true); return; }
+    document.dispatchEvent(new CustomEvent('horta:map-pick-start', {detail:{source:'nota'}}));
     if(notesDialog.open) notesDialog.close();
     map.invalidateSize({pan:false});
     pickMode = true;
@@ -593,6 +595,10 @@
 
   document.addEventListener('keydown', function(event){
     if(event.key === 'Escape' && pickMode) stopPick(true);
+  });
+
+  document.addEventListener('horta:map-pick-start', function(event){
+    if(!event.detail || event.detail.source !== 'nota') stopPick(false);
   });
 
   document.addEventListener('click', function(event){

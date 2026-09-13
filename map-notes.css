@@ -21,6 +21,7 @@
   grid-template-columns:1fr 1fr;
   gap:6px;
 }
+.field-tool-btn-wide{grid-column:1 / -1}
 .field-tool-btn{
   display:flex;
   align-items:center;
