@@ -1,6 +1,6 @@
 /* Servei fora de línia de la PWA. Incrementa aquesta versió quan es publiqui
    una actualització important del projecte. */
-const CACHE_NAME = 'mapa-horta-shell-v9';
+const CACHE_NAME = 'mapa-horta-shell-v10';
 const APP_SHELL = [
   './', './index.html', './mapa.html', './guia.html', './app.css',
   './app-shell.js', './map-notes.css', './map-notes.js',
@@ -28,10 +28,19 @@ self.addEventListener('fetch', function(event){
   var url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (request.mode === 'navigate') {
-    event.respondWith(caches.match(request).then(function(cached){
-      return cached || fetch(request);
-    }).catch(function(){ return caches.match('./index.html'); }));
+  var isAppCode = request.mode === 'navigate' || /\.(?:html?|js|css|webmanifest)$/.test(url.pathname);
+  if (isAppCode) {
+    event.respondWith(fetch(request).then(function(response){
+      if (response && response.ok) {
+        var copy = response.clone();
+        caches.open(CACHE_NAME).then(function(cache){ cache.put(request, copy); });
+      }
+      return response;
+    }).catch(function(){
+      return caches.match(request).then(function(cached){
+        return cached || (request.mode === 'navigate' ? caches.match('./index.html') : Promise.reject());
+      });
+    }));
     return;
   }
 

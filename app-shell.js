@@ -4,8 +4,16 @@
   var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
   if ('serviceWorker' in navigator) {
+    var refreshingForUpdate = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function(){
+      if (refreshingForUpdate) return;
+      refreshingForUpdate = true;
+      window.location.reload();
+    });
     window.addEventListener('load', function(){
-      navigator.serviceWorker.register('./sw.js').catch(function(err){
+      navigator.serviceWorker.register('./sw.js', {updateViaCache:'none'}).then(function(registration){
+        return registration.update();
+      }).catch(function(err){
         console.warn('No s\'ha pogut activar el mode fora de línia:', err);
       });
     });

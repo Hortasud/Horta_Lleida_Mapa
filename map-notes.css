@@ -101,7 +101,8 @@
   transform:rotate(45deg);
   font:800 13px/1 Archivo,"Helvetica Neue",Arial,sans-serif;
 }
-.map-current-icon{background:none;border:0}
+.field-location-pane,.field-location-pane *{pointer-events:none!important}
+.map-current-icon{pointer-events:none!important;background:none;border:0}
 .map-current-dot{
   position:relative;
   display:block;
